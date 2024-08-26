@@ -20,6 +20,7 @@ app.set('views', 'views');
 // Serve static files from the 'assets' directory
 app.use(express.static('assets'));
 
+
 // Parse incoming request bodies in a middleware before your handlers, available under the req.body property
 app.use(express.urlencoded({ extended: true }));
 
