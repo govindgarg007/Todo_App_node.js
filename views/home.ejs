@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Todo_App</title>
+</head>
+<body>
+    <div id="todo-container">
+        <h1 id="app-heading">Todo_App</h1>
+        <!-- Task Submission Form -->
+        <form action="/submit-task" method="post">
+            <div class="input-div">
+                <label for="description">
+                    <p>DESCRIPTION</p>
+                    <input type="text" name="description" id="description" placeholder="What do you need to do?" required>
+                </label>
+            </div>
+            <div class="input-div">
+                <label for="category" class="label50">
+                    <p>CATEGORY</p>
+                    <select name="category" id="category">
+                        <option value="" selected hidden>Choose a category</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="school">School</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="other">Other</option>
+                    </select>
+                </label>
+                <label for="due_date" class="label50">
+                    <p>DUE DATE</p>
+                    <input type="date" name="due_date" id="due_date">
+                </label>
+            </div>
+            <div class="btn-div">
+                <button type="submit" id="add-btn"><i class="fas fa-plus"></i> ADD TASK</button>
+                <button type="button" id="delete-btn"><i class="fas fa-trash-alt"></i> DELETE TASKS</button>
+            </div>
+        </form>
+
+        <!-- Task Deletion Form -->
+        <form action="/delete-task" method="POST" id="list-form">
+            <ul>
+                <% tasks_list.forEach(task => { %>
+                    <li>
+                        <label for="<%= task._id %>">
+                            <input type="checkbox" name="checked" class="toggle" value="<%= task._id %>" id="<%= task._id %>">
+                            <div class="task-list">
+                                <p class="task-text"><%= task.description %></p>
+                                <p class="task-date"><i class="far fa-calendar-alt"></i>
+                                    <% if(task.due_date) { %>
+                                        <% let mydate = new Date(task.due_date); %><%= mydate.toDateString() %>
+                                    <% } else { %>
+                                        No Deadline
+                                    <% } %>
+                                </p>
+                            </div>
+                        </label>
+                        <% if(task.category) { %>
+                            <button class="<%= task.category %>"><%= task.category %></button>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+        </form>
+    </div>
+    <script src="/js/home.js"></script>
+</body>
+</html>
